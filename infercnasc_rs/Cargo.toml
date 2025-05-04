@@ -1,0 +1,19 @@
+[package]
+name = "infercnasc_rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Alejandro J. Soto Franco", "Raeann Kalinowski", "Amy Liu"]
+description = "Rust backend for inferCNAsc: fast copy number inference from scRNA-seq"
+license = "GPL-3.0"
+repository = "https://github.com/YOUR_USERNAME/inferCNAsc"
+
+[lib]
+name = "infercnasc_rs"
+crate-type = ["cdylib"]  # for PyO3 / FFI-compatible shared lib
+
+[dependencies]
+pyo3 = { version = "0.20", features = ["extension-module"] }
+rayon = "1.8"
+ndarray = "0.15"
+serde = { version = "1.0", features = ["derive"] }
+anyhow = "1.0"
