@@ -31,7 +31,7 @@ cd inferCNAsc
 pip install -e .
 ```
 
-## Authors
+## Authors and Affiliations
 
 This project was co-developed, in equal collaboration, by:
 
@@ -39,7 +39,7 @@ This project was co-developed, in equal collaboration, by:
 - **Raeann Kalinowski**
 - **Amy Liu**
 
-Computational Stem Cell Biology Final Project, Spring 2025
+It was developed as a final project for 580.447 Computational Stem Cell Biology, Spring 2025.
 
 > Johns Hopkins University Department of Biomedical Engineering
 
