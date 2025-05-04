@@ -29,3 +29,23 @@ This project is under active development. Clone the repository and install in ed
 git clone https://github.com/YOUR_USERNAME/inferCNAsc.git
 cd inferCNAsc
 pip install -e .
+```
+
+## Authors
+
+This project was co-developed, in equal collaboration, by:
+
+- **Alejandro J. Soto Franco**
+- **Raeann Kalinowski**
+- **Amy Liu**
+
+Computational Stem Cell Biology Final Project, Spring 2025
+Johns Hopkins University Department of Biomedical Engineering
+
+---
+
+## Citation
+
+If you use `inferCNAsc` in your work, please cite:
+
+> Soto Franco A.J., Kalinowski R., Liu A. *inferCNAsc: a Python toolkit for copy number inference from single-cell transcriptomes*. In preparation (2025)
