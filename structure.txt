@@ -8,7 +8,7 @@ infercnasc/
   ├── visualize.py     # heatmaps and regional plots
   └── io.py            # gene annotation and chromosomal utilities
 notebooks/
-  └── inferCNAsc_workflow.ipynb
+  └── finalcode.ipynb  # Mirrored from Google Colab
 tests/
   └── test_infer.py
 setup.py
