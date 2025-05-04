@@ -17,6 +17,9 @@ pip-log.txt
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
 
+# AnnData objects
+.h5ad
+
 # Output files
 *.h5
 *.h5ad
