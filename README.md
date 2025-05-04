@@ -26,7 +26,7 @@ A Python package for inferring copy number alterations (CNAs) from single-cell R
 This project is under active development. Clone the repository and install in editable mode:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/inferCNAsc.git
+git clone https://github.com/alejandro-soto-franco/inferCNAsc.git
 cd inferCNAsc
 pip install -e .
 ```
