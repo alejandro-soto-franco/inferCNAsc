@@ -49,4 +49,4 @@ It was developed as a final project for 580.447 Computational Stem Cell Biology,
 
 If you use `inferCNAsc` in your work, please cite:
 
-> Soto Franco A.J., Kalinowski R., Liu A. *inferCNAsc: a Python toolkit for copy number inference from single-cell transcriptomes*. In preparation (2025)
+> Soto Franco A.J., Kalinowski R., Liu A (equal co-authors). *inferCNAsc: a Python toolkit for copy number inference from single-cell transcriptomes*. In preparation (2025)

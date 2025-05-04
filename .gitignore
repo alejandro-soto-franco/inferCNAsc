@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+*.egg-info/
+
+# Installer logs
+pip-log.txt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Output files
+*.h5
+*.h5ad
+*.loom
+*.csv
+*.tsv
+*.pdf
+*.png
+*.jpg
+*.svg
+
+# Python interactive session history
+.python_history
+
+# MacOS
+.DS_Store
+
+# VSCode config
+.vscode/
+
+# Test coverage
+htmlcov/
+.coverage
+.cache/
+
+# Notebooks with large outputs (optional: for cleaning WIP notebooks before commit)
+# *.ipynb
+
+# MyPy and Pyright
+.mypy_cache/
+.pyright/
+
+# Pytest
+.pytest_cache/
+
+# Build artifacts
+build/
+dist/
+*.egg
+*.whl
