@@ -40,7 +40,8 @@ This project was co-developed, in equal collaboration, by:
 - **Amy Liu**
 
 Computational Stem Cell Biology Final Project, Spring 2025
-Johns Hopkins University Department of Biomedical Engineering
+
+> Johns Hopkins University Department of Biomedical Engineering
 
 ---
 
