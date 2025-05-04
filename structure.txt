@@ -1,0 +1,18 @@
+v0.1 structure file
+
+infercnasc/
+  ├── __init__.py
+  ├── infer.py         # core CNA inference logic
+  ├── normalize.py     # expression normalization, control subtraction
+  ├── simulate.py      # CNA simulation tools (optional)
+  ├── visualize.py     # heatmaps and regional plots
+  └── io.py            # gene annotation and chromosomal utilities
+notebooks/
+  └── inferCNAsc_workflow.ipynb
+tests/
+  └── test_infer.py
+setup.py
+requirements.txt
+structure.txt
+README.md
+LICENSE
