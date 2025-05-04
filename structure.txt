@@ -1,16 +1,36 @@
 v0.1 structure file
 
-infercnasc/
-  ├── __init__.py
-  ├── infer.py         # core CNA inference logic
-  ├── normalize.py     # expression normalization, control subtraction
-  ├── simulate.py      # CNA simulation tools (optional)
-  ├── visualize.py     # heatmaps and regional plots
-  └── io.py            # gene annotation and chromosomal utilities
-notebooks/
-  └── finalcode.ipynb  # Mirrored from Google Colab
-tests/
-  └── test_infer.py
+inferCNAsc/
+  ├── py/
+  │   └── infercnasc/
+  │       ├── __init__.py
+  │       ├── infer.py
+  │       ├── normalize.py
+  │       ├── simulate.py
+  │       ├── visualize.py
+  │       └── io.py
+  ├── rust/
+  │   └── infercnasc_rs/
+  │       ├── src/
+  │       │   ├── lib.rs
+  │       │   ├── binning.rs
+  │       │   ├── smooth.rs
+  │       │   ├── segment.rs
+  │       │   └── cna.rs
+  │       └── Cargo.toml
+  ├── notebooks/
+  │   └── inferCNAsc_workflow.ipynb
+  ├── tests/
+  │   └── test_infer.py
+  ├── dev/
+  │   ├── PBMC_simulated_cnas_041025.h5ad  # benchmark input
+  │   ├── gencode_reference.gtf            # gene-to-chromosome mapping file
+  │   ├── scratch.ipynb                    # exploratory development notebook
+  │   └── test_config.toml                 # additional test settings
+  ├── setup.py
+  ├── requirements.txt
+  ├── README.md
+  └── LICENSE
 setup.py
 requirements.txt
 structure.txt
