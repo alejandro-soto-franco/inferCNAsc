@@ -1,6 +1,6 @@
 # inferCNAsc
 
-**Version: 0.1 (development)**  
+**Version: 0.2 (notebook beta)**  
 A Python package for inferring copy number alterations (CNAs) from single-cell RNA-sequencing (scRNA-seq) data.
 
 ---
