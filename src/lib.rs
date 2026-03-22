@@ -1,3 +1,53 @@
+//! Copy number alteration (CNA) inference from single-cell RNA-seq data.
+//!
+//! # Overview
+//!
+//! This crate provides a Rust-native pipeline for detecting chromosomal copy
+//! number gains and losses from scRNA-seq expression matrices. The three core
+//! functions form a sequential pipeline:
+//!
+//! 1. [`smooth_expression`]: applies a chromosome-aware sliding-window mean
+//!    to reduce per-gene noise.
+//! 2. [`find_cnas`]: flags cells with z-scores above or below a threshold as
+//!    gains or losses for each gene.
+//! 3. [`assign_cnas_to_cells`]: merges consecutive flagged genes on the same
+//!    chromosome into [`CnaRecord`] regions using a run-length scan.
+//!
+//! # Example
+//!
+//! ```rust
+//! use ndarray::array;
+//! use infercnasc::{smooth_expression, find_cnas, assign_cnas_to_cells};
+//!
+//! let expression = array![[1.0_f64, 2.0, 3.0], [4.0, 5.0, 6.0]];
+//! let chroms = vec!["1", "1", "1"];
+//!
+//! let smoothed = smooth_expression(&expression, &chroms, 3).unwrap();
+//! let (gains, losses) = find_cnas(&smoothed, 1.5);
+//! let records = assign_cnas_to_cells(
+//!     &gains, &losses,
+//!     &chroms,
+//!     &[0, 1000, 2000],
+//!     &[999, 1999, 2999],
+//!     &["BRCA1", "TP53", "MYC"],
+//!     2,
+//! );
+//! ```
+//!
+//! # Errors
+//!
+//! [`smooth_expression`] returns [`InferError::EmptyMatrix`] if the expression
+//! matrix has zero rows or columns, and [`InferError::ShapeMismatch`] if the
+//! length of `chroms` does not match the number of gene columns.
+//!
+//! [`find_cnas`] and [`assign_cnas_to_cells`] are infallible.
+//!
+//! # Python bindings
+//!
+//! The optional `python` feature exposes this pipeline via PyO3. Install the
+//! Python package with `pip install infercnasc` rather than enabling this
+//! feature directly.
+
 pub mod error;
 pub mod smooth;
 pub mod cna;
