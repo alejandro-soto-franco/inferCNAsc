@@ -7,7 +7,7 @@ license     = "MIT"
 repository  = "https://github.com/alejandro-soto-franco/inferCNAsc"
 keywords    = ["bioinformatics", "single-cell", "genomics", "CNA"]
 categories  = ["science"]
-exclude     = ["python/", "notebooks/", "tests/", ".github/", "docs/", "*.md"]
+exclude     = ["python/", "notebooks/", "tests/", ".github/", "docs/", "*.md", "target/"]
 
 [lib]
 name = "infercnasc"
