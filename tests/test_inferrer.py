@@ -65,3 +65,20 @@ def test_assign_to_clusters_returns_dataframe():
     labels = pd.Series(["A"] * 10 + ["B"] * 10)
     result = inferrer.assign_to_clusters(labels)
     assert isinstance(result, pd.DataFrame)
+
+
+def test_from_anndata_integration():
+    """from_anndata() extracts expression and annotated gene_info from AnnData."""
+    import anndata
+    rng = np.random.default_rng(0)
+    X = rng.poisson(3.0, size=(10, 20)).astype(np.float64)
+    var = pd.DataFrame({
+        "chrom": (["1"] * 10 + ["2"] * 10),
+        "start": list(range(0, 20_000, 1000)),
+        "end":   list(range(999, 20_000, 1000)),
+    }, index=[f"ENSG{i:011d}" for i in range(20)])
+    adata = anndata.AnnData(X=X, var=var)
+
+    inferrer = CNAInferrer.from_anndata(adata, window_size=3)
+    df = inferrer.cna_df()
+    assert isinstance(df, pd.DataFrame)
