@@ -70,7 +70,7 @@ let cnas = assign_cnas_to_cells(
 
 **Alejandro J. Soto Franco** (primary author)
 
-The algorithm design and original Python prototype (v0.2) were co-developed with
+The algorithm design and original Python prototype (pre-release v0.2) were co-developed with
 Raeann Kalinowski and Amy Liu as a final project for 580.447 Computational Stem
 Cell Biology, Spring 2025, Johns Hopkins University Department of Biomedical
 Engineering. This crate is a full independent rewrite and is no longer associated
