@@ -1,62 +1,50 @@
-# Byte-compiled / optimized / DLL files
+# Rust build artifacts
+target/
+Cargo.lock
+
+# Compiled Python extension modules (maturin/PyO3 output)
+*.so
+*.pyd
+
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.egg-info/
+*.egg
+*.whl
 
 # Virtual environments
 .venv/
-env/
 venv/
+env/
 ENV/
-env.bak/
-*.egg-info/
 
-# Installer logs
-pip-log.txt
+# Package build and distribution
+build/
+dist/
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# AnnData objects
-.h5ad
-
-# Output files
-*.h5
-*.h5ad
-*.loom
-*.csv
-*.tsv
-*.pdf
-*.png
-*.jpg
-*.svg
-
-# Python interactive session history
-.python_history
-
-# MacOS
-.DS_Store
-
-# VSCode config
-.vscode/
-
-# Test coverage
+# Testing
+.pytest_cache/
 htmlcov/
 .coverage
-.cache/
 
-# Notebooks with large outputs (optional: for cleaning WIP notebooks before commit)
-# *.ipynb
-
-# MyPy and Pyright
+# Type checkers
 .mypy_cache/
 .pyright/
 
-# Pytest
-.pytest_cache/
+# Ensembl lookup cache (created at runtime by infercnasc.io)
+ensembl_cache.sqlite
 
-# Build artifacts
-build/
-dist/
-*.egg
-*.whl
+# Data files (not committed to the library repo)
+*.h5ad
+*.h5
+*.loom
+
+# Editors and OS
+.vscode/
+.DS_Store
+.python_history
+
+# Installer logs
+pip-log.txt
