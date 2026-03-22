@@ -46,8 +46,9 @@ ensembl_cache.sqlite
 .DS_Store
 .python_history
 
-# Numerical scratch tests (local only)
+# Numerical scratch tests and internal planning docs (local only)
 scratch/
+docs/
 
 # Installer logs
 pip-log.txt
