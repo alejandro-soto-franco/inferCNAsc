@@ -18,7 +18,7 @@ default = []
 python  = ["pyo3/extension-module", "pyo3/abi3-py310", "numpy"]
 
 [dependencies]
-ndarray   = { version = "0.15", features = ["rayon"] }
+ndarray   = { version = "0.16", features = ["rayon"] }
 rayon     = "1.10"
 thiserror = "1"
 pyo3      = { version = "0.22", optional = true }
