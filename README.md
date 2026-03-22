@@ -76,11 +76,6 @@ Cell Biology, Spring 2025, Johns Hopkins University Department of Biomedical
 Engineering. This crate is a full independent rewrite and is no longer associated
 with that course or developed for academic submission purposes.
 
-## Citation
-
-> Soto Franco A.J., Kalinowski R., Liu A. *inferCNAsc: a Python toolkit for
-> copy number inference from single-cell transcriptomes*. In preparation (2025).
-
 ## License
 
 MIT
