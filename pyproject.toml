@@ -1,0 +1,21 @@
+[build-system]
+requires      = ["maturin>=1.4,<2"]
+build-backend = "maturin"
+
+[project]
+name = "infercnasc"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "anndata>=0.10",
+    "requests-cache>=1.1",
+    "matplotlib>=3.7",
+    "platformdirs>=4.0",
+]
+
+[tool.maturin]
+python-source = "python"
+module-name   = "infercnasc._core"
+bindings      = "pyo3"
+features      = ["python"]
