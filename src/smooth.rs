@@ -1,6 +1,6 @@
+use crate::error::InferError;
 use ndarray::{Array2, Axis, s};
 use rayon::prelude::*;
-use crate::error::InferError;
 
 /// Applies a chromosome-aware sliding-window mean to an expression matrix.
 ///
@@ -88,10 +88,7 @@ mod tests {
 
     #[test]
     fn basic_smoothing_shape_preserved() {
-        let expr = array![
-            [1.0_f64, 2.0, 3.0, 4.0, 5.0],
-            [2.0, 3.0, 4.0, 5.0, 6.0],
-        ];
+        let expr = array![[1.0_f64, 2.0, 3.0, 4.0, 5.0], [2.0, 3.0, 4.0, 5.0, 6.0],];
         let chroms = vec!["1", "1", "1", "1", "1"];
         let result = smooth_expression(&expr, &chroms, 3).unwrap();
         assert_eq!(result.dim(), (2, 5));
@@ -103,10 +100,7 @@ mod tests {
         // chr2 has genes 2-3 (values 1, 2).
         // With window_size=4, gene 2 should only average over chr2 genes,
         // so result for cell 0, gene 2 should be (1+2)/2 = 1.5, not (20+1+2)/3.
-        let expr = array![
-            [10.0_f64, 20.0, 1.0, 2.0],
-            [10.0, 20.0, 1.0, 2.0],
-        ];
+        let expr = array![[10.0_f64, 20.0, 1.0, 2.0], [10.0, 20.0, 1.0, 2.0],];
         let chroms = vec!["1", "1", "2", "2"];
         let result = smooth_expression(&expr, &chroms, 4).unwrap();
         assert_abs_diff_eq!(result[[0, 2]], 1.5, epsilon = 1e-10);

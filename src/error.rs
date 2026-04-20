@@ -17,7 +17,10 @@ mod tests {
 
     #[test]
     fn shape_mismatch_message_contains_counts() {
-        let e = InferError::ShapeMismatch { expr: 100, chroms: 50 };
+        let e = InferError::ShapeMismatch {
+            expr: 100,
+            chroms: 50,
+        };
         let msg = format!("{e}");
         assert!(msg.contains("100"), "message: {msg}");
         assert!(msg.contains("50"), "message: {msg}");

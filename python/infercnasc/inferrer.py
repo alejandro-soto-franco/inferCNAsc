@@ -7,9 +7,12 @@ AnnData adaptation, and evaluation.
 """
 from __future__ import annotations
 
+from collections import defaultdict
 from typing import Optional
+
 import numpy as np
 import pandas as pd
+
 from infercnasc import _core
 
 
@@ -63,6 +66,7 @@ class CNAInferrer:
             min_region_size).
         """
         from infercnasc.anndata import extract_from_anndata
+
         expression, gene_info = extract_from_anndata(adata)
         return cls(**kwargs).fit(expression, gene_info)
 
@@ -85,31 +89,28 @@ class CNAInferrer:
         -------
         self, for method chaining.
         """
-        # Drop genes missing coordinate annotations.
         valid = gene_info[["chrom", "start", "end"]].notna().all(axis=1)
         gene_info = gene_info[valid].copy()
         expression = expression[:, valid.values]
 
-        # Sort genes by (chrom, start) so the sliding window stays within chromosomes.
-        # Capture the original integer positions BEFORE reset_index so expression
-        # columns are reordered to match the sorted gene order.
         sorted_gene_info = gene_info.sort_values(["chrom", "start"])
-        sort_idx = sorted_gene_info.index.tolist()   # original column positions
+        sort_idx = sorted_gene_info.index.to_numpy()
         gene_info = sorted_gene_info.reset_index(drop=True)
         expression = expression[:, sort_idx]
 
-        chroms = gene_info["chrom"].tolist()
+        chroms = gene_info["chrom"].astype(str).tolist()
         starts = gene_info["start"].to_numpy(dtype=np.int64)
-        ends   = gene_info["end"].to_numpy(dtype=np.int64)
-        names  = gene_info["gene"].tolist()
+        ends = gene_info["end"].to_numpy(dtype=np.int64)
+        names = gene_info["gene"].astype(str).tolist()
 
         expression = np.ascontiguousarray(expression, dtype=np.float64)
 
         self._smoothed = _core.smooth_expression(expression, chroms, self.window_size)
         gains_raw, losses_raw = _core.find_cnas(self._smoothed, self.z_score_threshold)
-        # Convert u8 arrays from the Rust binding to proper bool arrays.
-        self._gains = gains_raw.astype(bool)
-        self._losses = losses_raw.astype(bool)
+        # pyo3-numpy maps Rust `bool` to numpy uint8; reinterpret as bool_
+        # with a zero-copy view for user-facing attributes.
+        self._gains = gains_raw.view(np.bool_)
+        self._losses = losses_raw.view(np.bool_)
         raw_records = _core.assign_cnas_to_cells(
             gains_raw,
             losses_raw,
@@ -154,11 +155,14 @@ class CNAInferrer:
     def evaluate(self, simulated_df: pd.DataFrame) -> dict:
         """Compare inferred CNAs to a known ground-truth DataFrame.
 
+        Matching is any-overlap on genomic coordinates within the same
+        chromosome and label. Runs in O(n_inferred + n_truth) for the common
+        case via a chrom+label-indexed bucket sweep, not O(n x m).
+
         Parameters
         ----------
         simulated_df:
             DataFrame with columns: chrom, start, end, label.
-            Typically produced by `infercnasc.io.parse_simulated`.
 
         Returns
         -------
@@ -167,18 +171,28 @@ class CNAInferrer:
         """
         self._require_fit()
         inferred = self._cna_df
+        assert inferred is not None
+
+        buckets: dict[tuple[str, str], list[tuple[int, int, int]]] = defaultdict(list)
+        for j, s_chrom, s_start, s_end, s_label in zip(
+            simulated_df.index,
+            simulated_df["chrom"].astype(str),
+            simulated_df["start"].astype(int),
+            simulated_df["end"].astype(int),
+            simulated_df["label"].astype(str),
+            strict=False,
+        ):
+            buckets[(s_chrom, s_label)].append((int(s_start), int(s_end), int(j)))
+
+        matched: set[int] = set()
         tp = 0
         fp = 0
-        matched: set[int] = set()
 
-        for _, inf_row in inferred.iterrows():
+        for inf in inferred.itertuples(index=False):
+            key = (str(inf.chrom), str(inf.label))
             hit = False
-            for j, sim_row in simulated_df.iterrows():
-                if (
-                    str(sim_row["chrom"]) == str(inf_row["chrom"])
-                    and sim_row["label"] == inf_row["label"]
-                    and not (sim_row["end"] < inf_row["start_pos"] or sim_row["start"] > inf_row["end_pos"])
-                ):
+            for s_start, s_end, j in buckets.get(key, []):
+                if not (s_end < inf.start_pos or s_start > inf.end_pos):
                     tp += 1
                     matched.add(j)
                     hit = True
@@ -187,9 +201,10 @@ class CNAInferrer:
                 fp += 1
 
         fn = len(simulated_df) - len(matched)
-        precision = tp / (tp + fp + 1e-9)
-        recall = tp / (tp + fn + 1e-9)
-        f1 = 2 * precision * recall / (precision + recall + 1e-9)
+        eps = 1e-9
+        precision = tp / (tp + fp + eps)
+        recall = tp / (tp + fn + eps)
+        f1 = 2 * precision * recall / (precision + recall + eps)
         return {
             "true_positives": tp,
             "false_positives": fp,
