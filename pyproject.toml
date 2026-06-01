@@ -36,3 +36,6 @@ features      = ["python"]
 markers = [
     "integration: tests that download external data or otherwise touch the network",
 ]
+
+[tool.pyrefly]
+# Enables full Pyrefly type checking; run with `uvc`. See ~/.claude/rules/pyrefly.md
