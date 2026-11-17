@@ -23,7 +23,7 @@ pip install infercnasc
 ```
 
 Wheels are built for Linux x86_64/aarch64, macOS universal2, and Windows x86_64
-against Python's abi3-py310 stable ABI, so a single wheel serves Python 3.10+.
+against Python's abi3-py310 stable ABI. A single wheel serves Python 3.10+.
 
 For the Rust API:
 
@@ -53,8 +53,8 @@ icplot.cna_matrix(inferrer)
 local `requests-cache` backing store.
 
 Sparse `AnnData.X` is supported natively. Coordinate-annotation filtering
-runs on the sparse matrix first, so the eventual dense materialization is
-limited to genes that survive annotation; this avoids the standard scRNA
+runs on the sparse matrix first. The eventual dense materialization is
+limited to genes that remain after annotation; this avoids the standard scRNA
 memory blow-up of an unconditional `.toarray()`.
 
 ## Rust
@@ -74,16 +74,16 @@ let cnas = assign_cnas_to_cells(
 
 ## Pipeline
 
-1. **Gene annotation.** Gene identifiers are resolved to genomic coordinates
+1. Gene annotation. Gene identifiers are resolved to genomic coordinates
    via the Ensembl REST API, with responses cached locally under the
    platform cache directory.
-2. **Smoothing.** A sliding-window mean is applied along each chromosome.
+2. Smoothing. A sliding-window mean is applied along each chromosome.
    The window resets at chromosome boundaries. Columns are processed in
    parallel.
-3. **CNA calling.** Per-gene z-scores are computed across cells. Entries
+3. CNA calling. Per-gene z-scores are computed across cells. Entries
    above `+z_threshold` are flagged as gains, entries below `-z_threshold`
    as losses. Zero-variance genes are skipped.
-4. **Region assembly.** Consecutive flagged genes on the same chromosome are
+4. Region assembly. Consecutive flagged genes on the same chromosome are
    merged into `CnaRecord` regions by a parallel per-cell run-length scan.
    Runs shorter than `min_region_size` are dropped.
 
